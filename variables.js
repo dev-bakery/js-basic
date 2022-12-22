@@ -5,7 +5,7 @@
 
 let a = 0; //let은 재할당 가능
 a = 1;
-const b = 0; //const는 재할당 안됨
+const b = 0; //const는 재할당만 안됨!! 중요!! 할당된 객체의 변경은 가능
 // b = 3;
 // console.log(b); TypeError: Assignment to constant variable.
 
