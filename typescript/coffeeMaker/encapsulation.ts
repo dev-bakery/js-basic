@@ -5,6 +5,7 @@
   };
 
   class CoffeeMaker {
+    // private 키워드를 사용하면 외부에서 접근이 불가능함
     private static BEANS_GRAMM_PER_SHOT: number = 7;
     private coffeeBeans: number = 0;
 
