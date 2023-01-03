@@ -8,19 +8,13 @@
     makeCoffee(shots: number): CoffeeCup;
   }
 
-  interface CommercialCoffeeMaker {
-    makeCoffee(shots: number): CoffeeCup;
-    fillCoffeeBeans(beans: number): void;
-    clean(): void;
-  }
-
   // implements 정의된 인터페이스를 사용하겠다 라는 것을 의미
-  class CoffeeMakerImpl implements CoffeeMaker, CommercialCoffeeMaker {
+  class CoffeeMakerImpl implements CoffeeMaker {
     // private 키워드를 사용하면 외부에서 접근이 불가능함
     private static BEANS_GRAMM_PER_SHOT: number = 7;
     private coffeeBeans: number = 0;
 
-    private constructor(coffeeBeans: number) {
+    constructor(coffeeBeans: number) {
       this.coffeeBeans = coffeeBeans;
     }
 
@@ -67,27 +61,29 @@
     }
   }
 
-  class AmateurUser {
-    constructor(private machine: CoffeeMaker) {}
-    makeCoffee(shots: number) {
-      const coffee = this.machine.makeCoffee(shots);
-      console.log(coffee);
+  class CaffeLatteMakerImpl extends CoffeeMakerImpl {
+    private steamMilk(): void {
+      console.log("steaming some milk..");
     }
-  }
-  class ProBarista {
-    constructor(private machine: CommercialCoffeeMaker) {}
-    makeCoffee(shots: number) {
-      const coffee = this.machine.makeCoffee(shots);
-      console.log(coffee);
-      this.machine.fillCoffeeBeans(200);
-      this.machine.clean();
+    makeCoffee(shots: number): CoffeeCup {
+      // super 를 이용하면 부모에 있는 함수들을 사용할 수 있음
+      const coffee = super.makeCoffee(shots);
+      this.steamMilk();
+      return {
+        ...coffee,
+        hasMilk: true,
+      };
     }
   }
 
-  const maker: CoffeeMakerImpl = CoffeeMakerImpl.makeMachine(100);
-  // maker.makeCoffee(2);
-  const amateur = new AmateurUser(maker);
-  const pro = new ProBarista(maker);
-  amateur.makeCoffee(2);
-  pro.makeCoffee(3);
+  /** 커피 1샷
+  const machine = new CoffeeMakerImpl(100);
+  const coffee = machine.makeCoffee(1);
+  console.log(coffee);
+  */
+
+  /** 라떼 1샷 */
+  const latteMachine = new CaffeLatteMakerImpl(100);
+  const latte = latteMachine.makeCoffee(1);
+  console.log(latte);
 }

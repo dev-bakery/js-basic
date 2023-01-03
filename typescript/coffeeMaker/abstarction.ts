@@ -90,6 +90,4 @@
   const pro = new ProBarista(maker);
   amateur.makeCoffee(2);
   pro.makeCoffee(3);
-  console.log(amateur);
-  console.log(pro);
 }
