@@ -12,6 +12,7 @@ type StackNode = {
 class StackImpl implements Stack {
   private _size: number = 0;
   private head?: StackNode;
+  // stack의 클래스 생성할때 최대 길이를 인자로 받아서 지정한다.
   constructor(private capacity: number) {}
   get size() {
     return this._size;
