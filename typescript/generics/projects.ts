@@ -1,32 +1,32 @@
 {
-  interface Stack {
+  interface Stack<T> {
     readonly size: number;
-    push(value: string): void;
-    pop(): string;
+    push(value: T): void;
+    pop(): T;
   }
 
-  type StackNode = {
-    readonly value: string;
-    readonly next?: StackNode;
+  type StackNode<T> = {
+    readonly value: T;
+    readonly next?: StackNode<T>;
   };
 
-  class StackImpl implements Stack {
+  class StackImpl<T> implements Stack<T> {
     private _size: number = 0;
-    private head?: StackNode;
+    private head?: StackNode<T>;
     // stack의 클래스 생성할때 최대 길이를 인자로 받아서 지정한다.
     constructor(private capacity: number) {}
     get size() {
       return this._size;
     }
-    push(value: string) {
+    push(value: T) {
       if (this._size === this.capacity) {
         throw new Error("Stack is full!");
       }
-      const node: StackNode = { value, next: this.head };
+      const node = { value, next: this.head };
       this.head = node;
       this._size++;
     }
-    pop(): string {
+    pop(): T {
       if (this.head == null) {
         throw new Error("Stack is empty");
       }
@@ -37,12 +37,20 @@
     }
   }
 
-  const stack = new StackImpl(10);
+  const stack = new StackImpl<string>(10);
   stack.push("qwe");
   stack.push("asd");
   stack.push("zxc");
   // stack.push("rty");
   while (stack.size !== 0) {
     console.log(stack.pop());
+  }
+  const stack2 = new StackImpl<number>(10);
+  stack2.push(123);
+  stack2.push(456);
+  stack2.push(789);
+  // stack2.push("rty");
+  while (stack2.size !== 0) {
+    console.log(stack2.pop());
   }
 }
